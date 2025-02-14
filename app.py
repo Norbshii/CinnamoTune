@@ -9,6 +9,7 @@ def authenticate_spotify():
         redirect_uri='http://localhost:8888/callback',
         scope="playlist-modify-public user-read-private"))
     return sp
+
 st.title('Spotify Playlist Generator')
 
 # User inputs
@@ -21,11 +22,21 @@ if st.button('Generate Playlist'):
     if sp:
         user_id = sp.current_user()['id']  # Get the user's Spotify ID
         playlist = sp.user_playlist_create(user_id, playlist_name, public=True)  # Create a new playlist
-        results = sp.search(q=f'{mood} {genre}', limit=10, type='track')
-        track_ids = [track['id'] for track in results['tracks']['items']]
-        sp.playlist_add_items(playlist_id=playlist['id'], items=track_ids)
+        
+        # Search for tracks in batches to avoid slow loading
+        total_tracks = 30
+        track_ids = []
+        for offset in range(0, total_tracks, 10):  # Adjust batch size if necessary
+            results = sp.search(q=f'{mood} {genre}', limit=10, offset=offset, type='track')
+            track_ids.extend([track['id'] for track in results['tracks']['items']])
+        
+        # Add tracks to the playlist
+        if track_ids:
+            sp.playlist_add_items(playlist_id=playlist['id'], items=track_ids[:total_tracks])
+        
         st.success('Playlist created successfully!')
         st.write(f'Playlist Name: {playlist_name}')
         st.write('Tracks added:')
-        for track in results['tracks']['items']:
+        for track_id in track_ids[:total_tracks]:  # Ensure only up to total_tracks are listed
+            track = sp.track(track_id)
             st.write(track['name'])
