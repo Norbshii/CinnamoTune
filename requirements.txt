@@ -1,0 +1,2 @@
+streamlit==1.42.0
+spotipy==2.19.0  # Ensure this line is present and version is correct as per your installation
