@@ -5,7 +5,7 @@ from spotipy.oauth2 import SpotifyOAuth
 scope = 'user-library-read'
 client_id = '20c8bdfc98024b9491ac6dfaae38c934'
 client_secret = '2c7e2a64ffda4a73a623c0ab48f4ed4c'
-redirect_uri = 'http://localhost:8501/callback'
+redirect_uri = 'http://localhost:8888/callback'
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret,
                                               redirect_uri=redirect_uri, scope=scope))
