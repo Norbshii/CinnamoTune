@@ -4,8 +4,8 @@ import streamlit as st
 
 def authenticate_spotify():
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-        client_id='YOUR_CLIENT_ID',
-        client_secret='YOUR_CLIENT_SECRET',
+        client_id='20c8bdfc98024b9491ac6dfaae38c934',
+        client_secret='2c7e2a64ffda4a73a623c0ab48f4ed4c',
         redirect_uri='http://localhost:8501/callback',
         scope="playlist-modify-public user-read-private"))
     return sp
