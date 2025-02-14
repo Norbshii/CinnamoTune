@@ -6,7 +6,7 @@ def authenticate_spotify():
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
         client_id='20c8bdfc98024b9491ac6dfaae38c934',
         client_secret='2c7e2a64ffda4a73a623c0ab48f4ed4c',
-        redirect_uri='http://localhost:8888/callbackv',
+        redirect_uri='http://localhost:8501/callbackv',
         scope="playlist-modify-public user-read-private"))
     return sp
 
